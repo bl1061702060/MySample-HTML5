@@ -1,0 +1,19 @@
+1.将url生成二维码
+2.url 指向某个网页，网页上有两个按钮，下载/打开本地app
+3.点击下载跳转到APP下载页面
+4.点击打开本地app，启动本地已安装app
+      a、注册自定义 URL Scheme
+      注册自定义 URL Scheme 的第一步是创建 URL Scheme — 在 Xcode Project Navigator 中找到并点击工程 info.plist 文件。在列表上点击鼠标右键，选择 Add Row:
+向下滚动弹出的列表并选择 URL types。
+
+      点击“URL types”左边剪头打开列表，可以看到 Item 0，一个字典实体。展开 Item 0，可以看到 URL Identifier，一个字符串对象。该字符串是你自定义的 URL scheme 的名字。建议采用反转域名的方法保证该名字的唯一性，比如 com.yourCompany.yourApp。
+
+      点击“URL types” 下的Item 0 新增一行，从下拉列表中选择 URL Schemes，敲击键盘回车键完成插入。
+
+      展开“URL Schemes”，并点击 Item 0。你将在这里定义自定义 URL scheme 的名字。只需要名字，不要在后面追加 :// 。比如，如果你输入 iOSDevApp，你的自定义 url 就是 iOSDevApp:// 
+
+      b.在safari调用自定义的URL Scheme
+      在手机端的safari 地址栏里输入“iOSDevApp://”, 回车访问。此时safari将关闭，应用会被带到前台。
+      
+      中文参考：http://www.cocoachina.com/industry/20140522/8514.html
+      英文参考：http://iosdevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html

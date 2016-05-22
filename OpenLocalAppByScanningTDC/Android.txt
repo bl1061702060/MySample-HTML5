@@ -1,0 +1,40 @@
+1.将url生成二维码
+
+2.url 指向某个网页，网页上有两个按钮，下载/打开本地apk
+
+3.点击下载跳转到APK下载页面
+
+4.点击打开本地apk，启动本地已安装apk
+
+      a.为Android应用的启动Activity设置一个Scheme，如下：(在启动的<activity android:hardwareAccelerated="true"> 节点下增加子节点)
+      
+      <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="lmsapp" />
+      </intent-filter>
+      
+      b.用户点击浏览器中的链接时，在动态创建一个不可见的iframe，并且让这个iframe去加载步骤1中的Scheme，如下：
+      
+      var ifr = document.createElement('iframe');
+      ifr.src="cundong://splash"
+      
+      c.如果在指定的时间内没有跳转成功，则当前页跳转到apk的下载地址（或下载页），如下：
+      
+      window.location = download_url;
+
+5.AndroidMainfext.xml （增加scheme后xml文件部分）
+
+<activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/activity_name" android:launchMode="singleTop" android:name="lmsapp" android:screenOrientation="portrait"               android:theme="@android:style/Theme.Black.NoTitleBar" android:windowSoftInputMode="adjustResize">
+            <intent-filter android:label="@string/launcher_name">
+                   <action android:name="android.intent.action.MAIN" />
+                   <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+                   <intent-filter>
+                   <action android:name="android.intent.action.VIEW" />
+                   <category android:name="android.intent.category.DEFAULT" />
+                   <category android:name="android.intent.category.BROWSABLE" />
+                   <data android:scheme="lmsapp" />
+            </intent-filter>
+</activity>

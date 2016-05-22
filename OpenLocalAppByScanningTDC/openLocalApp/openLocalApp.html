@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>OpenLocalApp</title>
+    <style>
+    .page {
+        background: url(background.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .tdc {
+        top: 9%;
+        left: 0;
+        position: absolute;
+        margin-left: 15%;
+        width: 70%;
+        height: 39%;
+        border: solid 1px;
+        border-color: white;
+        background-color: rgba(179, 207, 245, 0.33);
+    }
+
+    .layout {
+        top: 60%;
+        left: 0;
+        position: absolute;
+        width: 100%;
+    }
+
+    .botton {
+        margin-top: 20px;
+        background-color: rgba(2, 138, 255, 0.74);
+        text-align: center;
+        width: 60%;
+        height: 35px;
+        border: solid 1px white;
+        border-radius: 20px;
+        line-height: 34px;
+        margin-left: 20%;
+        font-weight: bold;
+        color: white;
+    }
+    </style>
+    <script>
+    var ua = navigator.userAgent.toLowerCase();
+    var t;
+    var config = {
+        /*scheme:必须*/
+        scheme_IOS: 'lmsapp://',
+        scheme_Adr: 'lmsapp://',
+        download_url_ios: 'http://www.baidu.com',
+        download_url_android: 'http://www.hao123.com',
+        timeout: 2000
+    };
+
+    function openLocalApp() {
+        var startTime = Date.now();
+
+        var ifr = document.createElement('iframe');
+
+
+        ifr.src = ua.indexOf('os') > 0 ? config.scheme_IOS : config.scheme_Adr;
+        ifr.style.display = 'none';
+        document.body.appendChild(ifr);
+
+        var t = setTimeout(function() {
+            var endTime = Date.now();
+
+            if ((!startTime || endTime - startTime < config.timeout + 200) && ua.indexOf('os') > 0) {
+                window.location = config.download_url_ios;
+            } else if (!startTime || endTime - startTime < config.timeout + 200) {
+                window.location = config.download_url_android;
+            }
+        }, config.timeout);
+
+        window.onblur = function() {
+            clearTimeout(t);
+        }
+    }
+
+    function downloadApp() {
+        if (ua.indexOf('os') > 0) {
+            window.location = config.download_url_ios;
+        } else {
+            window.location = config.download_url_android;
+        }
+    }
+    </script>
+</head>
+
+<body class="page">
+    <div class="tdc">
+        <span>二维码</span>
+    </div>
+    <div class="layout">
+        <div class="botton">
+            <span id="download_app" onclick="downloadApp()">下载</span>
+        </div>
+        <div class="botton">
+            <span id="open_localapp" onclick="openLocalApp()">打开App</span>
+        </div>
+    </div>
+</body>
+
+</html>
